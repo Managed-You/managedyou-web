@@ -4,14 +4,14 @@ import 'package:validators/validators.dart';
 import '../../../responsive/responsive.dart';
 import 'login_button.dart';
 
-class Fields extends StatefulWidget {
-  const Fields({Key? key}) : super(key: key);
+class LoginFields extends StatefulWidget {
+  const LoginFields({Key? key}) : super(key: key);
 
   @override
-  State<Fields> createState() => _FieldsState();
+  State<LoginFields> createState() => _LoginFieldsState();
 }
 
-class _FieldsState extends State<Fields> {
+class _LoginFieldsState extends State<LoginFields> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -121,7 +121,7 @@ class _FieldsState extends State<Fields> {
                   // );
                 },
                 child: Text(
-                  'Sign Up Here',
+                  'Login Here',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),

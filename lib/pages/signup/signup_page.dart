@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:managed_web/pages/signup/signup_fields.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: const Text('Login'),
+        title: const Text('SignUp'),
       ),
       body: Stack(
         alignment: Alignment.center,
