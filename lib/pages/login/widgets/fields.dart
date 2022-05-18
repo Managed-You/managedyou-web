@@ -28,13 +28,21 @@ class _FieldsState extends State<Fields> {
               validator: (val) => !isEmail(val!) ? "Invalid Email" : null,
               autocorrect: false,
               decoration: InputDecoration(
-                focusColor: Colors.black,
-                floatingLabelStyle: const TextStyle(color: Colors.black),
+                focusColor: Theme.of(context).colorScheme.primary,
+                floatingLabelStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(40),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 labelText: 'Email ID',
               ),
@@ -56,13 +64,21 @@ class _FieldsState extends State<Fields> {
               obscureText: true,
               autocorrect: false,
               decoration: InputDecoration(
-                focusColor: Colors.black,
-                floatingLabelStyle: const TextStyle(color: Colors.black),
+                focusColor: Theme.of(context).colorScheme.primary,
+                floatingLabelStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(40),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 labelText: 'Password',
               ),
@@ -86,10 +102,15 @@ class _FieldsState extends State<Fields> {
               width: isDesktop(context, 800) ? 500 : 300,
               child: ElevatedButton(
                 style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).colorScheme.onPrimary,
+                  ),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
+                        borderRadius: BorderRadius.circular(20.0),
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.primary,
+                        )),
                   ),
                 ),
                 onPressed: () {
@@ -99,8 +120,11 @@ class _FieldsState extends State<Fields> {
                   //   // MaterialPageRoute(builder: (context) => const SignUpPage()),
                   // );
                 },
-                child: const Text(
+                child: Text(
                   'Sign Up Here',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
             ),

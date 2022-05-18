@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Managed',
       theme: ThemeData(colorScheme: lightColorScheme),
       darkTheme: ThemeData(colorScheme: darkColorScheme),
       home: const LoginPage(),
