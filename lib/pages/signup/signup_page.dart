@@ -21,7 +21,7 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [Fields()],
+                children: const [SignUpFields()],
               ),
             ),
           ),

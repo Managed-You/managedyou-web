@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:managed_web/pages/signup/signup_fields.dart';
+import 'package:managed_web/pages/login/widgets/login_fields.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [Fields()],
+                children: const [LoginFields()],
               ),
             ),
           ),
