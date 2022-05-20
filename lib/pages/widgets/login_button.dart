@@ -18,16 +18,9 @@ class LoginButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final _auth = ref.watch(authenticationProvider);
     return ElevatedButton(
       onPressed: () async {
-        if (_formKey.currentState!.validate()) {
-          // // await _auth.signInWithEmailAndPassword(
-          //   _emailController.text,
-          //   _passwordController.text,
-          //   context,
-          // );
-        }
+        if (_formKey.currentState!.validate()) {}
       },
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

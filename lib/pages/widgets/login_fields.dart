@@ -4,14 +4,14 @@ import 'package:validators/validators.dart';
 import '../../../responsive/responsive.dart';
 import 'login_button.dart';
 
-class LoginFields extends StatefulWidget {
-  const LoginFields({Key? key}) : super(key: key);
+class Fields extends StatefulWidget {
+  const Fields({Key? key}) : super(key: key);
 
   @override
-  State<LoginFields> createState() => _LoginFieldsState();
+  State<Fields> createState() => _FieldsState();
 }
 
-class _LoginFieldsState extends State<LoginFields> {
+class _FieldsState extends State<Fields> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -97,37 +97,7 @@ class _LoginFieldsState extends State<LoginFields> {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-              height: 50,
-              width: isDesktop(context, 800) ? 500 : 300,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).colorScheme.onPrimary,
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        )),
-                  ),
-                ),
-                onPressed: () {
-                  // Navigator.pop(context);
-                  // Navigator.push(
-                  //   context,
-                  //   // MaterialPageRoute(builder: (context) => const SignUpPage()),
-                  // );
-                },
-                child: Text(
-                  'Login Here',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ),
-            ),
+            
           ],
         ),
       ),
