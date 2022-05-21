@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:managed_web/pages/login_page.dart';
+import 'package:managed_web/pages/signup_page.dart';
 import 'package:managed_web/theme/theme.dart';
 
 void main() {
@@ -13,9 +14,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Managed',
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/signup':(context) => const SignUpPage(),
+      },
       theme: ThemeData(colorScheme: lightColorScheme),
       darkTheme: ThemeData(colorScheme: darkColorScheme),
-      home: const LoginPage(),
+      initialRoute: '/login',
     );
   }
 }
