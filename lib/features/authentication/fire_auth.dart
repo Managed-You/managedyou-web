@@ -1,0 +1,93 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class FireAuth extends ChangeNotifier {
+  late User? _user;
+  User? get user => _user;
+  bool _isLoggedIn = false;
+  bool get isLoggedIn => _isLoggedIn;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Stream<User?> get authStateChange => _auth.authStateChanges();
+
+  FireAuth() {
+    _auth.authStateChanges().listen((user) {
+      _user = user;
+      if (user == null) {
+        _isLoggedIn = false;
+      } else {
+        _isLoggedIn = true;
+      }
+      notifyListeners();
+    });
+  }
+
+  Future<void> signInWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
+    try {
+      Navigator.pushNamed(
+        context,
+        '/loading',
+      );
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      await verifyUser();
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        ModalRoute.withName('/'),
+      );
+    } on FirebaseAuthException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: const Text('Error Occured'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  ModalRoute.withName('/'),
+                );
+              },
+              child: const Text("OK"),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  static Future<User?> refreshUser(User user) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    await user.reload();
+    User? refreshedUser = auth.currentUser;
+
+    return refreshedUser;
+  }
+
+  Future<void> verifyUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null && !user.emailVerified) {
+      await user.sendEmailVerification();
+    }
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    Navigator.pushNamed(
+      context,
+      '/loading',
+    );
+    await _auth.signOut();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/login',
+      ModalRoute.withName('/'),
+    );
+  }
+}

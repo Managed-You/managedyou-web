@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:managed_web/features/authentication/auth_providers.dart';
 import 'package:validators/validators.dart';
 
 import '../responsive/responsive.dart';
@@ -162,7 +163,10 @@ class LoginButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
       onPressed: () async {
-        if (_formKey.currentState!.validate()) {}
+        if (_formKey.currentState!.validate()) {
+          ref.read(fireAuthProvider.notifier).signInWithEmailAndPassword(
+              _emailController.text, _passwordController.text, context);
+        }
       },
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

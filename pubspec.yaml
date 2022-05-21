@@ -37,6 +37,7 @@ dependencies:
   flutter_riverpod: ^1.0.4
   validators: ^3.0.0
   firebase_core: ^1.17.0
+  firebase_auth: ^3.3.18
 
 dev_dependencies:
   flutter_test:
