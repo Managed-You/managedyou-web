@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +34,48 @@ class FireAuth extends ChangeNotifier {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       await verifyUser();
-      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        ModalRoute.withName('/'),
+      );
+    } on FirebaseAuthException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: const Text('Error Occured'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  ModalRoute.withName('/'),
+                );
+              },
+              child: const Text("OK"),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> signUpWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
+    try {
+       Navigator.pushNamed(
+        context,
+        '/loading',
+      );
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await verifyUser();
+  Navigator.pushNamedAndRemoveUntil(
         context,
         '/home',
         ModalRoute.withName('/'),

@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: const Text("Welcome Back to Managed You"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -49,7 +49,9 @@ class _LoginFieldsState extends State<LoginFields> {
       key: _formKey,
       autovalidateMode: AutovalidateMode.always,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.50,
+        width: isDesktop(context, 800)
+            ? MediaQuery.of(context).size.width * 0.50
+            : MediaQuery.of(context).size.width * 0.70,
         child: Column(
           children: [
             TextFormField(

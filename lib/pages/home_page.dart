@@ -1,23 +1,61 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:managed_web/features/authentication/auth_providers.dart';
+import 'package:managed_web/pages/account_page.dart';
+import 'package:managed_web/responsive/responsive.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              ref.read(fireAuthProvider.notifier).signOut(context);
-            },
-          )
-        ],
-      ),
+    return Row(
+      children: [
+        Flexible(
+          flex: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Home'),
+              actions: [
+                isDesktop(context, 800)
+                    ? const SizedBox()
+                    : IconButton(
+                        tooltip: "Account",
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/account');
+                        },
+                        icon: const Icon(
+                          CupertinoIcons.person_crop_circle,
+                        ),
+                      )
+              ],
+            ),
+          ),
+        ),
+        isDesktop(context, 800)
+            ? Flexible(
+                flex: 1,
+                child: Container(
+                  color: Theme.of(context).colorScheme.primary,
+                  child: const Padding(
+                    padding: EdgeInsets.only(
+                      // top: 26,
+                      bottom: 26,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                      child: AccountPage(),
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox()
+      ],
     );
   }
 }
