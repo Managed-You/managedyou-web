@@ -6,6 +6,7 @@ import 'package:managed_web/pages/account_page.dart';
 import 'package:managed_web/pages/home_page.dart';
 import 'package:managed_web/pages/loading_page.dart';
 import 'package:managed_web/pages/login_page.dart';
+import 'package:managed_web/pages/settings_page.dart';
 import 'package:managed_web/pages/signup_page.dart';
 import 'package:managed_web/theme/theme.dart';
 
@@ -32,10 +33,17 @@ class MyApp extends ConsumerWidget {
         '/home': (context) => const HomePage(),
         '/loading': (context) => const LoadingPage(),
         '/account': (context) => const AccountPage(),
+        '/settings': (context) => const SettingsPage(),
       },
-      theme: ThemeData(colorScheme: lightColorScheme),
-      darkTheme: ThemeData(colorScheme: darkColorScheme),
-      initialRoute: ref.watch(fireAuthProvider).isLoggedIn ? '/login' : '/home',
+      theme: ThemeData(
+        colorScheme: lightColorScheme,
+        fontFamily: "Coda",
+      ),
+      darkTheme: ThemeData(
+        colorScheme: darkColorScheme,
+        fontFamily: "Coda",
+      ),
+      initialRoute: ref.watch(fireAuthProvider).isLoggedIn ? '/home' : '/login',
     );
   }
 }

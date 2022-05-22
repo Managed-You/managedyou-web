@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +13,13 @@ class AccountPage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text("Account"),
         actions: [
+          IconButton(
+            tooltip: "Settings",
+            icon: const Icon(CupertinoIcons.settings),
+            onPressed: () async {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
           IconButton(
             tooltip: "Logout",
             icon: const Icon(Icons.logout),

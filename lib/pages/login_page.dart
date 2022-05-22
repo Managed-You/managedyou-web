@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
+import 'package:managed_web/widgets/social_buttons.dart';
 import 'package:validators/validators.dart';
 
 import '../responsive/responsive.dart';
@@ -15,22 +16,26 @@ class LoginPage extends StatelessWidget {
         title: const Text("Welcome Back to Managed You"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              LoginFields(),
-            ],
+      body: Stack(alignment: Alignment.center, children: [
+        SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                LoginFields(),
+              ],
+            ),
           ),
         ),
-      ),
+        const SocialButtons(),
+      ]),
     );
   }
 }
+
 
 class LoginFields extends StatefulWidget {
   const LoginFields({Key? key}) : super(key: key);

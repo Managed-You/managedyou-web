@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FireAuth extends ChangeNotifier {
   late User? _user;
@@ -65,7 +66,7 @@ class FireAuth extends ChangeNotifier {
   Future<void> signUpWithEmailAndPassword(
       String email, String password, BuildContext context) async {
     try {
-       Navigator.pushNamed(
+      Navigator.pushNamed(
         context,
         '/loading',
       );
@@ -75,7 +76,137 @@ class FireAuth extends ChangeNotifier {
       );
 
       await verifyUser();
-  Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        ModalRoute.withName('/'),
+      );
+    } on FirebaseAuthException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: const Text('Error Occured'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  ModalRoute.withName('/'),
+                );
+              },
+              child: const Text("OK"),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    try {
+      Navigator.pushNamed(
+        context,
+        '/loading',
+      );
+      await _auth.signInWithCredential(credential);
+      await verifyUser();
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        ModalRoute.withName('/'),
+      );
+    } on FirebaseAuthException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: const Text('Error Occured'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login',
+                    ModalRoute.withName('/'),
+                  );
+                },
+                child: const Text("OK"))
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> signInWithFacebook(BuildContext context) async {
+    // Create a new provider
+    FacebookAuthProvider facebookProvider = FacebookAuthProvider();
+
+    facebookProvider.addScope('email');
+    facebookProvider.setCustomParameters({
+      'display': 'popup',
+    });
+
+    try {
+      Navigator.pushNamed(
+        context,
+        '/loading',
+      );
+      await _auth.signInWithPopup(facebookProvider);
+      await verifyUser();
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        ModalRoute.withName('/'),
+      );
+    } on FirebaseAuthException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: const Text('Error Occured'),
+          content: Text(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  ModalRoute.withName('/'),
+                );
+              },
+              child: const Text("OK"),
+            )
+          ],
+        ),
+      );
+    }
+  }
+    Future<void> signInWithGitHub(BuildContext context) async {
+    // Create a new provider
+   GithubAuthProvider githubProvider = GithubAuthProvider();
+
+    try {
+      Navigator.pushNamed(
+        context,
+        '/loading',
+      );
+      await _auth.signInWithPopup(githubProvider);
+      await verifyUser();
+      Navigator.pushNamedAndRemoveUntil(
         context,
         '/home',
         ModalRoute.withName('/'),
@@ -126,6 +257,7 @@ class FireAuth extends ChangeNotifier {
       '/loading',
     );
     await _auth.signOut();
+    _isLoggedIn = false;
     Navigator.pushNamedAndRemoveUntil(
       context,
       '/login',
