@@ -17,7 +17,7 @@ class HomePage extends ConsumerWidget {
             appBar: AppBar(
               title: const Text('Home'),
               actions: [
-                isDesktop(context, 800)
+                isDesktop(context, 900)
                     ? const SizedBox()
                     : IconButton(
                         tooltip: "Account",
@@ -32,24 +32,21 @@ class HomePage extends ConsumerWidget {
             ),
           ),
         ),
-        isDesktop(context, 800)
+        isDesktop(context, 900)
             ? Flexible(
                 flex: 1,
                 child: Container(
                   color: Theme.of(context).colorScheme.primary,
-                  child: const Padding(
-                    padding: EdgeInsets.only(
-                      // top: 26,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 26,
                       bottom: 26,
                       left: 20,
                       right: 20,
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                      child: AccountPage(),
+                      borderRadius: BorderRadius.circular(20),
+                      child: const AccountPage(),
                     ),
                   ),
                 ),

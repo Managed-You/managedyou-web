@@ -16,13 +16,13 @@ class SignUpPage extends StatelessWidget {
         title: const Text("Welcome to Managed You"),
         centerTitle: true,
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,9 +31,9 @@ class SignUpPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          const SocialButtons(),
-        ],
+            const SocialButtons(),
+          ],
+        ),
       ),
     );
   }
@@ -49,6 +49,7 @@ class SignUpFields extends StatefulWidget {
 class _SignUpFieldsState extends State<SignUpFields> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -77,6 +78,37 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 labelText: 'Email ID',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: _userNameController,
+              validator: (val) {
+                if (!isLowercase(val!)) {
+                  return "Lowercase letters only";
+                }
+                if (val.length < 5) {
+                  return "Username must be at least 5 characters";
+                }
+                if (val.contains(" ")) {
+                  return "No Space";
+                } else {
+                  return null;
+                }
+              },
+              autocorrect: false,
+              decoration: InputDecoration(
+                focusColor: Colors.black,
+                floatingLabelStyle: const TextStyle(color: Colors.black),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                labelText: 'Set Username',
               ),
             ),
             const SizedBox(
@@ -145,9 +177,11 @@ class _SignUpFieldsState extends State<SignUpFields> {
               height: 50,
               width: isDesktop(context, 800) ? 500 : 300,
               child: SignUpButton(
-                  formKey: _formKey,
-                  emailController: _emailController,
-                  passwordController: _passwordController),
+                formKey: _formKey,
+                emailController: _emailController,
+                passwordController: _passwordController,
+                userNameController: _userNameController,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -192,14 +226,17 @@ class SignUpButton extends ConsumerWidget {
     required GlobalKey<FormState> formKey,
     required TextEditingController emailController,
     required TextEditingController passwordController,
+    required TextEditingController userNameController,
   })  : _formKey = formKey,
         _emailController = emailController,
         _passwordController = passwordController,
+        _userNameController = userNameController,
         super(key: key);
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
+  final TextEditingController _userNameController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -207,7 +244,10 @@ class SignUpButton extends ConsumerWidget {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           ref.watch(fireAuthProvider.notifier).signUpWithEmailAndPassword(
-              _emailController.text, _passwordController.text, context);
+              _emailController.text,
+              _passwordController.text,
+              _userNameController.text,
+              context);
         }
       },
       style: ButtonStyle(

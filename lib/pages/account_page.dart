@@ -29,6 +29,48 @@ class AccountPage extends ConsumerWidget {
           )
         ],
       ),
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            const CircleAvatar(
+              radius: 40,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              title: const Text("Email"),
+              subtitle: Text(ref.watch(fireAuthProvider).user?.email ?? ""),
+            ),
+            ListTile(
+              title: const Text("Username"),
+              subtitle:
+                  Text(ref.watch(fireAuthProvider).user?.displayName ?? ""),
+            ),
+            ListTile(
+              title: const Text("Email Verified"),
+              subtitle: Text(
+                ref.watch(fireAuthProvider).user!.emailVerified ? "Yes" : "No",
+              ),
+              trailing: ref.watch(fireAuthProvider).user!.emailVerified
+                  ? const SizedBox()
+                  : IconButton(
+                      tooltip: "Send Verification Email",
+                      icon: const Icon(CupertinoIcons.mail),
+                      onPressed: () {
+                        ref.watch(fireAuthProvider).verifyUser();
+                      },
+                    ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

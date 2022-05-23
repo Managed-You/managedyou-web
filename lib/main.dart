@@ -36,10 +36,18 @@ class MyApp extends ConsumerWidget {
         '/settings': (context) => const SettingsPage(),
       },
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF774A9B),
+          foregroundColor: Colors.white,
+        ),
         colorScheme: lightColorScheme,
         fontFamily: "Coda",
       ),
       darkTheme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF774A9B),
+          foregroundColor: Colors.black,
+        ),
         colorScheme: darkColorScheme,
         fontFamily: "Coda",
       ),

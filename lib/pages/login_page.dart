@@ -16,11 +16,11 @@ class LoginPage extends StatelessWidget {
         title: const Text("Welcome Back to Managed You"),
         centerTitle: true,
       ),
-      body: Stack(alignment: Alignment.center, children: [
-        SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
+      body: SizedBox(
+         width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
+        child: Stack(alignment: Alignment.center, children: [
+          SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,13 +29,12 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-        ),
-        const SocialButtons(),
-      ]),
+          const SocialButtons(),
+        ]),
+      ),
     );
   }
 }
-
 
 class LoginFields extends StatefulWidget {
   const LoginFields({Key? key}) : super(key: key);

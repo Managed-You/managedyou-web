@@ -63,8 +63,8 @@ class FireAuth extends ChangeNotifier {
     }
   }
 
-  Future<void> signUpWithEmailAndPassword(
-      String email, String password, BuildContext context) async {
+  Future<void> signUpWithEmailAndPassword(String email, String password,
+      String username, BuildContext context) async {
     try {
       Navigator.pushNamed(
         context,
@@ -76,6 +76,7 @@ class FireAuth extends ChangeNotifier {
       );
 
       await verifyUser();
+      await _auth.currentUser?.updateDisplayName(username);
       Navigator.pushNamedAndRemoveUntil(
         context,
         '/home',
@@ -195,9 +196,10 @@ class FireAuth extends ChangeNotifier {
       );
     }
   }
-    Future<void> signInWithGitHub(BuildContext context) async {
+
+  Future<void> signInWithGitHub(BuildContext context) async {
     // Create a new provider
-   GithubAuthProvider githubProvider = GithubAuthProvider();
+    GithubAuthProvider githubProvider = GithubAuthProvider();
 
     try {
       Navigator.pushNamed(
