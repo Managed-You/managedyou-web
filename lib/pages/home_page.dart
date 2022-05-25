@@ -30,6 +30,12 @@ class HomePage extends ConsumerWidget {
                       )
               ],
             ),
+            floatingActionButton: FloatingActionButton.extended(
+              label: const Text("Create Event"),
+              icon: const Icon(Icons.add),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              onPressed: () {},
+            ),
           ),
         ),
         isDesktop(context, 900)
