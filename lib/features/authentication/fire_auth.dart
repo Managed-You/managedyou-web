@@ -77,11 +77,6 @@ class FireAuth extends ChangeNotifier {
 
       await verifyUser();
       await _auth.currentUser?.updateDisplayName(username);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/home',
-        ModalRoute.withName('/'),
-      );
     } on FirebaseAuthException catch (e) {
       await showDialog(
         context: context,

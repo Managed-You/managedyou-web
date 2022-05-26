@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
+import 'package:managed_web/features/users/user_database_provider.dart';
+import 'package:managed_web/features/users/user_model.dart';
 import 'package:validators/validators.dart';
 
 import '../responsive/responsive.dart';
@@ -39,14 +43,14 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-class SignUpFields extends StatefulWidget {
+class SignUpFields extends ConsumerStatefulWidget {
   const SignUpFields({Key? key}) : super(key: key);
 
   @override
-  State<SignUpFields> createState() => _SignUpFieldsState();
+  ConsumerState<SignUpFields> createState() => _SignUpFieldsConsumerState();
 }
 
-class _SignUpFieldsState extends State<SignUpFields> {
+class _SignUpFieldsConsumerState extends ConsumerState<SignUpFields> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -123,6 +127,13 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 if (value.length < 5) {
                   return 'Must be more than 5 charater';
                 }
+                // if (ref
+                //         .watch(userDatabaseProvider.notifier)
+                //         .checkUserName(_userNameController.text)
+                //         .toString() ==
+                //     "Yes") {
+                //   return "Username already exists";
+                // }
                 return null;
               },
               obscureText: true,
@@ -243,11 +254,20 @@ class SignUpButton extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
-          ref.watch(fireAuthProvider.notifier).signUpWithEmailAndPassword(
-              _emailController.text,
-              _passwordController.text,
-              _userNameController.text,
-              context);
+          await ref.watch(fireAuthProvider.notifier).signUpWithEmailAndPassword(
+                _emailController.text,
+                _passwordController.text,
+                _userNameController.text,
+                context,
+              );
+
+          await ref.watch(userDatabaseProvider.notifier).addNewUser(
+                Users(
+                  userName: _userNameController.text,
+                  email: _emailController.text,
+                ),
+                context,
+              );
         }
       },
       style: ButtonStyle(
