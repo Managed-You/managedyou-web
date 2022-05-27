@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:managed_web/features/users/user_model.dart';
+import 'package:managed_web/pages/home_page.dart';
 
 class UserDatabase extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -16,10 +16,10 @@ class UserDatabase extends ChangeNotifier {
         'user': users.userName,
         'description': users.email,
       });
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushAndRemoveUntil(
         context,
-        '/home',
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false,
       );
       return true;
     } catch (e) {

@@ -4,6 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:managed_web/pages/home_page.dart';
+
+import '../../pages/loading_page.dart';
+import '../../pages/login_page.dart';
 
 class FireAuth extends ChangeNotifier {
   late User? _user;
@@ -28,17 +32,17 @@ class FireAuth extends ChangeNotifier {
   Future<void> signInWithEmailAndPassword(
       String email, String password, BuildContext context) async {
     try {
-      Navigator.pushNamed(
+      Navigator.push(
         context,
-        '/loading',
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       await verifyUser();
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushAndRemoveUntil(
         context,
-        '/home',
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false,
       );
     } on FirebaseAuthException catch (e) {
       await showDialog(
@@ -49,10 +53,10 @@ class FireAuth extends ChangeNotifier {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  '/login',
-                  ModalRoute.withName('/'),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
                 );
               },
               child: const Text("OK"),
@@ -66,9 +70,9 @@ class FireAuth extends ChangeNotifier {
   Future<void> signUpWithEmailAndPassword(String email, String password,
       String username, BuildContext context) async {
     try {
-      Navigator.pushNamed(
+      Navigator.push(
         context,
-        '/loading',
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -86,10 +90,10 @@ class FireAuth extends ChangeNotifier {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  '/login',
-                  ModalRoute.withName('/'),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
                 );
               },
               child: const Text("OK"),
@@ -115,16 +119,16 @@ class FireAuth extends ChangeNotifier {
     );
 
     try {
-      Navigator.pushNamed(
+      Navigator.push(
         context,
-        '/loading',
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithCredential(credential);
       await verifyUser();
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushAndRemoveUntil(
         context,
-        '/home',
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false,
       );
     } on FirebaseAuthException catch (e) {
       await showDialog(
@@ -134,14 +138,15 @@ class FireAuth extends ChangeNotifier {
           content: Text(e.toString()),
           actions: [
             TextButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/login',
-                    ModalRoute.withName('/'),
-                  );
-                },
-                child: const Text("OK"))
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: const Text("OK"),
+            )
           ],
         ),
       );
@@ -158,16 +163,16 @@ class FireAuth extends ChangeNotifier {
     });
 
     try {
-      Navigator.pushNamed(
+      Navigator.push(
         context,
-        '/loading',
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithPopup(facebookProvider);
       await verifyUser();
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushAndRemoveUntil(
         context,
-        '/home',
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false,
       );
     } on FirebaseAuthException catch (e) {
       await showDialog(
@@ -178,10 +183,10 @@ class FireAuth extends ChangeNotifier {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  '/login',
-                  ModalRoute.withName('/'),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
                 );
               },
               child: const Text("OK"),
@@ -197,16 +202,16 @@ class FireAuth extends ChangeNotifier {
     GithubAuthProvider githubProvider = GithubAuthProvider();
 
     try {
-      Navigator.pushNamed(
+      Navigator.push(
         context,
-        '/loading',
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithPopup(githubProvider);
       await verifyUser();
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushAndRemoveUntil(
         context,
-        '/home',
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (Route<dynamic> route) => false,
       );
     } on FirebaseAuthException catch (e) {
       await showDialog(
@@ -217,10 +222,10 @@ class FireAuth extends ChangeNotifier {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  '/login',
-                  ModalRoute.withName('/'),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
                 );
               },
               child: const Text("OK"),
@@ -249,16 +254,18 @@ class FireAuth extends ChangeNotifier {
   }
 
   Future<void> signOut(BuildContext context) async {
-    Navigator.pushNamed(
+    Navigator.push(
       context,
-      '/loading',
+      MaterialPageRoute(
+        builder: (context) => const LoadingPage(),
+      ),
     );
     await _auth.signOut();
     _isLoggedIn = false;
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.pushAndRemoveUntil(
       context,
-      '/login',
-      ModalRoute.withName('/'),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+      (Route<dynamic> route) => false,
     );
   }
 }

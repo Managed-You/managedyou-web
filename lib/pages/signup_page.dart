@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
 import 'package:managed_web/features/users/user_database_provider.dart';
 import 'package:managed_web/features/users/user_model.dart';
+import 'package:managed_web/pages/login_page.dart';
 import 'package:validators/validators.dart';
 
 import '../responsive/responsive.dart';
@@ -214,7 +215,11 @@ class _SignUpFieldsConsumerState extends ConsumerState<SignUpFields> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.popAndPushNamed(context, '/login');
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
                 },
                 child: Text(
                   'Login Here',

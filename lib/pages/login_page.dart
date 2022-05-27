@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
+import 'package:managed_web/pages/signup_page.dart';
 import 'package:managed_web/widgets/social_buttons.dart';
 import 'package:validators/validators.dart';
 
@@ -133,7 +134,11 @@ class _LoginFieldsState extends State<LoginFields> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.popAndPushNamed(context, '/signup');
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignUpPage()),
+                  );
                 },
                 child: Text(
                   'Sign Up Here',
