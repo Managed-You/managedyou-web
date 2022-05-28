@@ -166,7 +166,6 @@ class FireAuth extends ChangeNotifier {
         MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithPopup(facebookProvider);
-      await verifyUser();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
@@ -205,7 +204,6 @@ class FireAuth extends ChangeNotifier {
         MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithPopup(githubProvider);
-      await verifyUser();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),

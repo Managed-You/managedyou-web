@@ -38,8 +38,11 @@ class AccountPage extends ConsumerWidget {
             const SizedBox(
               height: 20,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 40,
+              foregroundImage: NetworkImage(
+                '${ref.read(fireAuthProvider.notifier).user?.photoURL}',
+              ),
             ),
             const SizedBox(
               height: 20,
