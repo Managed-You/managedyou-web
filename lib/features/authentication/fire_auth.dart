@@ -38,7 +38,7 @@ class FireAuth extends ChangeNotifier {
       );
       await _auth.signInWithEmailAndPassword(email: email, password: password);
 
-      await verifyUser();
+      
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
@@ -67,8 +67,8 @@ class FireAuth extends ChangeNotifier {
     }
   }
 
-  Future<void> signUpWithEmailAndPassword(String email, String password,
-      String username, BuildContext context) async {
+  Future<void> signUpWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
     try {
       Navigator.push(
         context,
@@ -80,7 +80,6 @@ class FireAuth extends ChangeNotifier {
       );
 
       await verifyUser();
-      await _auth.currentUser?.updateDisplayName(username);
     } on FirebaseAuthException catch (e) {
       await showDialog(
         context: context,
@@ -124,7 +123,6 @@ class FireAuth extends ChangeNotifier {
         MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
       await _auth.signInWithCredential(credential);
-      await verifyUser();
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
@@ -254,6 +252,7 @@ class FireAuth extends ChangeNotifier {
   }
 
   Future<void> signOut(BuildContext context) async {
+    Navigator.pop(context);
     Navigator.push(
       context,
       MaterialPageRoute(

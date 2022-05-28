@@ -13,8 +13,7 @@ class UserDatabase extends ChangeNotifier {
     _userCollection = _firestore.collection('users');
     try {
       await _userCollection.add({
-        'user': users.userName,
-        'description': users.email,
+        'email': users.email,
       });
       Navigator.pushAndRemoveUntil(
         context,
@@ -25,24 +24,5 @@ class UserDatabase extends ChangeNotifier {
     } catch (e) {
       return Future.error(e);
     }
-  }
-
-  //check username
-  Future<String?> checkUserName(String userName) async {
-    _userCollection = _firestore.collection('users');
-
-    String? valid;
-
-    await _userCollection
-        .where('user', isEqualTo: userName)
-        .get()
-        .then((value) {
-      if (value.docs.isNotEmpty) {
-        valid = "Yes";
-      } else {
-        valid = "No";
-      }
-    });
-    return valid;
   }
 }

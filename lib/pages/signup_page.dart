@@ -54,7 +54,6 @@ class SignUpFields extends ConsumerStatefulWidget {
 class _SignUpFieldsConsumerState extends ConsumerState<SignUpFields> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -89,37 +88,6 @@ class _SignUpFieldsConsumerState extends ConsumerState<SignUpFields> {
               height: 10,
             ),
             TextFormField(
-              controller: _userNameController,
-              validator: (val) {
-                if (!isLowercase(val!)) {
-                  return "Lowercase letters only";
-                }
-                if (val.length < 5) {
-                  return "Username must be at least 5 characters";
-                }
-                if (val.contains(" ")) {
-                  return "No Space";
-                } else {
-                  return null;
-                }
-              },
-              autocorrect: false,
-              decoration: InputDecoration(
-                focusColor: Colors.black,
-                floatingLabelStyle: const TextStyle(color: Colors.black),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                labelText: 'Set Username',
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
               controller: _passwordController,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -128,13 +96,6 @@ class _SignUpFieldsConsumerState extends ConsumerState<SignUpFields> {
                 if (value.length < 5) {
                   return 'Must be more than 5 charater';
                 }
-                // if (ref
-                //         .watch(userDatabaseProvider.notifier)
-                //         .checkUserName(_userNameController.text)
-                //         .toString() ==
-                //     "Yes") {
-                //   return "Username already exists";
-                // }
                 return null;
               },
               obscureText: true,
@@ -192,7 +153,6 @@ class _SignUpFieldsConsumerState extends ConsumerState<SignUpFields> {
                 formKey: _formKey,
                 emailController: _emailController,
                 passwordController: _passwordController,
-                userNameController: _userNameController,
               ),
             ),
             const SizedBox(
@@ -242,17 +202,14 @@ class SignUpButton extends ConsumerWidget {
     required GlobalKey<FormState> formKey,
     required TextEditingController emailController,
     required TextEditingController passwordController,
-    required TextEditingController userNameController,
   })  : _formKey = formKey,
         _emailController = emailController,
         _passwordController = passwordController,
-        _userNameController = userNameController,
         super(key: key);
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
-  final TextEditingController _userNameController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -262,13 +219,11 @@ class SignUpButton extends ConsumerWidget {
           await ref.watch(fireAuthProvider.notifier).signUpWithEmailAndPassword(
                 _emailController.text,
                 _passwordController.text,
-                _userNameController.text,
                 context,
               );
 
           await ref.watch(userDatabaseProvider.notifier).addNewUser(
                 Users(
-                  userName: _userNameController.text,
                   email: _emailController.text,
                 ),
                 context,

@@ -34,7 +34,9 @@ class HomePage extends ConsumerWidget {
               label: const Text("Create Event"),
               icon: const Icon(Icons.add),
               backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/createevent');
+              },
             ),
           ),
         ),
