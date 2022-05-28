@@ -16,6 +16,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
   EventType _eventType = EventType.onsite;
   EventDate _eventDate = EventDate.oneday;
   DateTime dateTime = DateTime.now();
+  TimeOfDay commenceTime = TimeOfDay.now();
   DateTimeRange dateTimeRange = DateTimeRange(
     start: DateTime.now(),
     end: DateTime.now().add(
@@ -29,6 +30,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     DateTime start = dateTimeRange.start;
     DateTime end = dateTimeRange.end;
     DateTime date = dateTime;
+    TimeOfDay commence = commenceTime;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Create Event"),
@@ -134,6 +136,19 @@ class _CreateEventPageState extends State<CreateEventPage> {
                                 ),
                               ],
                             ),
+                      Row(
+                        children: [
+                          const Text("Start Time"),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: pickTime,
+                              child:
+                                  Text("${commence.hour}:${commence.minute}"),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -198,6 +213,18 @@ class _CreateEventPageState extends State<CreateEventPage> {
         ),
       ),
     );
+  }
+
+  Future pickTime() async {
+    TimeOfDay? newCommenceTime = await showTimePicker(
+      context: context,
+      initialTime: commenceTime,
+    );
+    if (newCommenceTime != null) {
+      setState(() {
+        commenceTime = newCommenceTime;
+      });
+    }
   }
 
   Future pickDate() async {
