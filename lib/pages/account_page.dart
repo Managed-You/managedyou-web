@@ -42,6 +42,7 @@ class AccountPage extends ConsumerWidget {
               radius: 40,
               foregroundImage: NetworkImage(
                 '${ref.read(fireAuthProvider.notifier).user?.photoURL}',
+                scale: 40,
               ),
             ),
             const SizedBox(
