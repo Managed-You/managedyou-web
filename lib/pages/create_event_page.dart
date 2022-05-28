@@ -247,7 +247,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
       showCupertinoDialog(
         context: context,
         builder: ((context) => CupertinoAlertDialog(
-              title: const Text("Invalid Date"),
+              title: const Text("Invalid Date Range"),
               content:
                   const Text("Please select a valid date or dates after today"),
               actions: [
