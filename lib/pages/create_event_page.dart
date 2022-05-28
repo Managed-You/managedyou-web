@@ -239,7 +239,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     );
     if (newDateTimeRange != null &&
         newDateTimeRange.start.compareTo(DateTime.now()) > 0 &&
-        newDateTimeRange.start.compareTo(newDateTimeRange.end) > 0) {
+        newDateTimeRange.start.compareTo(newDateTimeRange.end) != 0) {
       setState(() {
         dateTimeRange = newDateTimeRange;
       });
@@ -248,8 +248,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
         context: context,
         builder: ((context) => CupertinoAlertDialog(
               title: const Text("Invalid Date"),
-              content: const Text(
-                  "Please select a valid date or dates after today,"),
+              content:
+                  const Text("Please select a valid date or dates after today"),
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
