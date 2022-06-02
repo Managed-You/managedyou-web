@@ -33,6 +33,14 @@ class SocialButtons extends ConsumerWidget {
               await ref
                   .watch(fireAuthProvider.notifier)
                   .signInWithGoogle(context);
+              await Future.delayed(const Duration(seconds: 2));
+              if (!await ref.watch(userDatabaseProvider.notifier).checkEmail(
+                  "${ref.watch(fireAuthProvider.notifier).user?.email}")) {
+                await ref.watch(userDatabaseProvider.notifier).addNewUser(Users(
+                      email:
+                          "${ref.watch(fireAuthProvider.notifier).user?.email}",
+                    ));
+              }
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomePage()),
@@ -51,6 +59,14 @@ class SocialButtons extends ConsumerWidget {
               await ref
                   .watch(fireAuthProvider.notifier)
                   .signInWithFacebook(context);
+              await Future.delayed(const Duration(seconds: 2));
+              if (!await ref.watch(userDatabaseProvider.notifier).checkEmail(
+                  "${ref.watch(fireAuthProvider.notifier).user?.email}")) {
+                await ref.watch(userDatabaseProvider.notifier).addNewUser(Users(
+                      email:
+                          "${ref.watch(fireAuthProvider.notifier).user?.email}",
+                    ));
+              }
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const HomePage()),
@@ -78,7 +94,7 @@ class SocialButtons extends ConsumerWidget {
               await ref
                   .watch(fireAuthProvider.notifier)
                   .signInWithGitHub(context);
-              //delay 5 seconds
+
               await Future.delayed(const Duration(seconds: 2));
               if (!await ref.watch(userDatabaseProvider.notifier).checkEmail(
                   "${ref.watch(fireAuthProvider.notifier).user?.email}")) {
