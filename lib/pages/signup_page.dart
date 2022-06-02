@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
 import 'package:managed_web/features/users/user_database_provider.dart';
 import 'package:managed_web/features/users/user_model.dart';
+import 'package:managed_web/pages/home_page.dart';
+import 'package:managed_web/pages/loading_page.dart';
 import 'package:managed_web/pages/login_page.dart';
 import 'package:validators/validators.dart';
 
@@ -216,18 +218,23 @@ class SignUpButton extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LoadingPage()),
+          );
           await ref.watch(fireAuthProvider.notifier).signUpWithEmailAndPassword(
                 _emailController.text,
                 _passwordController.text,
                 context,
               );
-
-          await ref.watch(userDatabaseProvider.notifier).addNewUser(
-                Users(
-                  email: _emailController.text,
-                ),
-                context,
-              );
+          await ref.watch(userDatabaseProvider.notifier).addNewUser(Users(
+                email: _emailController.text,
+              ));
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (Route<dynamic> route) => false,
+          );
         }
       },
       style: ButtonStyle(

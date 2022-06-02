@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
+import 'package:managed_web/pages/home_page.dart';
+import 'package:managed_web/pages/loading_page.dart';
 import 'package:managed_web/pages/signup_page.dart';
 import 'package:managed_web/widgets/social_buttons.dart';
 import 'package:validators/validators.dart';
@@ -18,8 +20,8 @@ class LoginPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SizedBox(
-         width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Stack(alignment: Alignment.center, children: [
           SingleChildScrollView(
             child: Column(
@@ -175,8 +177,17 @@ class LoginButton extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LoadingPage()),
+          );
           ref.read(fireAuthProvider.notifier).signInWithEmailAndPassword(
               _emailController.text, _passwordController.text, context);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (Route<dynamic> route) => false,
+          );
         }
       },
       style: ButtonStyle(

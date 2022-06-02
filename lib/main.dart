@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/features/authentication/auth_providers.dart';
-import 'package:managed_web/pages/account_page.dart';
-import 'package:managed_web/pages/create_event_page.dart';
 import 'package:managed_web/pages/error_screen.dart';
 import 'package:managed_web/pages/loading_page.dart';
-import 'package:managed_web/pages/settings_page.dart';
 import 'package:managed_web/theme/theme.dart';
 
 import 'features/authentication/auth_checker.dart';
@@ -23,12 +20,6 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Managed',
-      routes: {
-        '/loading': (context) => const LoadingPage(),
-        '/account': (context) => const AccountPage(),
-        '/settings': (context) => const SettingsPage(),
-        '/createevent': (context) => const CreateEventPage(),
-      },
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF774A9B),

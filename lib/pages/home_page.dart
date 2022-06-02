@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:managed_web/pages/account_page.dart';
+import 'package:managed_web/pages/create_event_page.dart';
 import 'package:managed_web/responsive/responsive.dart';
 
 class HomePage extends ConsumerWidget {
@@ -22,7 +23,12 @@ class HomePage extends ConsumerWidget {
                     : IconButton(
                         tooltip: "Account",
                         onPressed: () {
-                          Navigator.pushNamed(context, '/account');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AccountPage(),
+                            ),
+                          );
                         },
                         icon: const Icon(
                           CupertinoIcons.person_crop_circle,
@@ -35,7 +41,12 @@ class HomePage extends ConsumerWidget {
               icon: const Icon(Icons.add),
               backgroundColor: Theme.of(context).colorScheme.primary,
               onPressed: () {
-                Navigator.pushNamed(context, '/createevent');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateEventPage(),
+                  ),
+                );
               },
             ),
           ),
