@@ -46,169 +46,177 @@ class _CreateEventPageState extends State<CreateEventPage> {
         child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.always,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  focusColor: Colors.black,
-                  floatingLabelStyle: const TextStyle(color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  labelText: 'Name of the Event',
-                ),
-              ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: const Text('One Day Event'),
-                        leading: Radio<EventDate>(
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
-                          ),
-                          value: EventDate.oneday,
-                          groupValue: _eventDate,
-                          onChanged: (EventDate? value) {
-                            setState(() {
-                              _eventDate = value!;
-                            });
-                          },
-                        ),
-                      ),
-                      ListTile(
-                        title: const Text('Multi Day Event'),
-                        leading: Radio<EventDate>(
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
-                          ),
-                          value: EventDate.multiday,
-                          groupValue: _eventDate,
-                          onChanged: (EventDate? value) {
-                            setState(() {
-                              _eventDate = value!;
-                            });
-                          },
-                        ),
-                      ),
-                      (_eventDate == EventDate.multiday)
-                          ? Row(
-                              children: [
-                                const Text("From"),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton(
-                                    onPressed: pickDateRange,
-                                    child: Text(
-                                        "${start.day}/${start.month}/${start.year}"),
-                                  ),
-                                ),
-                                const Text("To"),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton(
-                                    onPressed: pickDateRange,
-                                    child: Text(
-                                        "${end.day}/${end.month}/${end.year}"),
-                                  ),
-                                ),
-                                Text(
-                                    "A ${end.difference(start).inDays} days event"),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                const Text("On"),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton(
-                                    onPressed: pickDate,
-                                    child: Text(
-                                        "${date.day}/${date.month}/${date.year}"),
-                                  ),
-                                ),
-                              ],
-                            ),
-                      Row(
-                        children: [
-                          const Text("Start Time"),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: pickTime,
-                              child:
-                                  Text("${commence.hour}:${commence.minute}"),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    focusColor: Colors.black,
+                    floatingLabelStyle: const TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    labelText: 'Name of the Event',
                   ),
                 ),
-              ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: const Text('Onsite'),
-                        leading: Radio<EventType>(
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: const Text('One Day Event'),
+                          leading: Radio<EventDate>(
+                            fillColor: MaterialStateColor.resolveWith(
+                              (states) => Theme.of(context).colorScheme.primary,
+                            ),
+                            value: EventDate.oneday,
+                            groupValue: _eventDate,
+                            onChanged: (EventDate? value) {
+                              setState(() {
+                                _eventDate = value!;
+                              });
+                            },
                           ),
-                          value: EventType.onsite,
-                          groupValue: _eventType,
-                          onChanged: (EventType? value) {
-                            setState(() {
-                              _eventType = value!;
-                            });
-                          },
                         ),
-                      ),
-                      ListTile(
-                        title: const Text('Remote'),
-                        leading: Radio<EventType>(
-                          fillColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary,
+                        ListTile(
+                          title: const Text('Multi Day Event'),
+                          leading: Radio<EventDate>(
+                            fillColor: MaterialStateColor.resolveWith(
+                              (states) => Theme.of(context).colorScheme.primary,
+                            ),
+                            value: EventDate.multiday,
+                            groupValue: _eventDate,
+                            onChanged: (EventDate? value) {
+                              setState(() {
+                                _eventDate = value!;
+                              });
+                            },
                           ),
-                          value: EventType.remote,
-                          groupValue: _eventType,
-                          onChanged: (EventType? value) {
-                            setState(() {
-                              _eventType = value!;
-                            });
-                          },
                         ),
-                      ),
-                      (_eventType == EventType.onsite)
-                          ? TextFormField(
-                              decoration: InputDecoration(
-                                focusColor: Colors.black,
-                                floatingLabelStyle:
-                                    const TextStyle(color: Colors.black),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                labelText: 'Venue',
+                        (_eventDate == EventDate.multiday)
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Text("From"),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ElevatedButton(
+                                          onPressed: pickDateRange,
+                                          child: Text(
+                                              "${start.day}/${start.month}/${start.year}"),
+                                        ),
+                                      ),
+                                      const Text("To"),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ElevatedButton(
+                                          onPressed: pickDateRange,
+                                          child: Text(
+                                              "${end.day}/${end.month}/${end.year}"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                      "A ${end.difference(start).inDays} days event"),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  const Text("On"),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                      onPressed: pickDate,
+                                      child: Text(
+                                          "${date.day}/${date.month}/${date.year}"),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                          : const SizedBox(),
-                    ],
+                        Row(
+                          children: [
+                            const Text("Start Time"),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                onPressed: pickTime,
+                                child:
+                                    Text("${commence.hour}:${commence.minute}"),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: const Text('Onsite'),
+                          leading: Radio<EventType>(
+                            fillColor: MaterialStateColor.resolveWith(
+                              (states) => Theme.of(context).colorScheme.primary,
+                            ),
+                            value: EventType.onsite,
+                            groupValue: _eventType,
+                            onChanged: (EventType? value) {
+                              setState(() {
+                                _eventType = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text('Remote'),
+                          leading: Radio<EventType>(
+                            fillColor: MaterialStateColor.resolveWith(
+                              (states) => Theme.of(context).colorScheme.primary,
+                            ),
+                            value: EventType.remote,
+                            groupValue: _eventType,
+                            onChanged: (EventType? value) {
+                              setState(() {
+                                _eventType = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        (_eventType == EventType.onsite)
+                            ? TextFormField(
+                                decoration: InputDecoration(
+                                  focusColor: Colors.black,
+                                  floatingLabelStyle:
+                                      const TextStyle(color: Colors.black),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  labelText: 'Venue',
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
